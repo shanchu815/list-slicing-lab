@@ -15,8 +15,12 @@ def custom_len(input_list):
         8
 
     """
-
-    return 0
+    # return len(input_list)
+    len = 0
+    
+    for item in input_list:
+        len += 1
+    return len
 
 
 # For the next four exercises, you'll need to be clever and think about ways
@@ -43,8 +47,15 @@ def custom_append(input_list, value):
         True
 
     """
+    # input_list.append(value)
+    # input_list + [value]
+    # new_list = [value]
+    # new_list[:0] = input_list
 
-    pass
+    last = custom_len(input_list)
+    #list is 8 elements but indices only go up to 7
+    input_list[last:last] = [value]
+    return None
 
 
 def custom_extend(input_list, second_list):
@@ -62,8 +73,14 @@ def custom_extend(input_list, second_list):
         True
 
     """
+    # input_list.extend(second_list)
+    # input_list + second_list
+    # second_list[:0] = input_list
 
-    pass
+    last = custom_len(input_list)
+    input_list[last:last] = second_list
+
+    return None
 
 
 def custom_insert(input_list, index, value):
@@ -81,8 +98,14 @@ def custom_insert(input_list, index, value):
 
     """
 
-    pass
+    # input_list.insert(index, value)
+    # input_list[:index] + [value] + input_list[index:]
+    input_list[index:index] = [value]
+    return None
 
+#original_list[:index] + value + original_list[index:]
+#[the values of the original list up until that index] PLUS "the value" PLUS [the values of the original list AFTER that index]
+#if the value is not already in brackets, you will need the [] because then it will error out
 
 def custom_remove(input_list, value):
     """Remove the first item of the value in list.
@@ -100,7 +123,16 @@ def custom_remove(input_list, value):
 
     """
 
-    pass
+    # input_list.remove(value)
+    index = 0
+    for item in input_list:
+        if item == value:
+            input_list[index:index + 1] = []
+            break
+        else:
+            index += 1
+
+    return None
 
 
 def custom_pop(input_list):
@@ -118,8 +150,9 @@ def custom_pop(input_list):
         ['Jan', 'Feb']
 
     """
-
-    return None
+    popped = input_list[-1]
+    input_list[-1:] = []
+    return popped
 
 
 def custom_index(input_list, value):
@@ -135,7 +168,16 @@ def custom_index(input_list, value):
 
     """
 
-    return 0
+    # return input_list.index(value)
+    index = 0
+    
+    for item in input_list:
+        if item == value:
+            return index
+        else:
+            index += 1
+
+    #list.index(element, start, end)
 
 
 def custom_count(input_list, value):
@@ -151,7 +193,14 @@ def custom_count(input_list, value):
 
     """
 
-    return 0
+    # return input_list.count(value)
+    count = 0
+
+    for item in input_list:
+        if item == value:
+            count += 1
+
+    return count
 
 
 def custom_reverse(input_list):
@@ -170,7 +219,23 @@ def custom_reverse(input_list):
 
     """
 
-    pass
+    # input_list.reverse()
+
+    # input_list[::-1]
+    # input_list[input_list[custom_len(input_list) - 1::-1]]
+    zero = input_list[0]
+    custom_pop(input_list)
+    for i in range(int(custom_len(input_list)/2)):
+        current_l = input_list[i]
+        # input_list[i] = input_list[i-1]
+        current_r = input_list[i * -1]
+        # print(input_list[i])
+        # print(input_list[i * -1])
+        input_list[i] = current_r
+        input_list[i * -1] = current_l
+    print(input_list)
+    # return None
+
 
 
 def custom_contains(input_list, value):
@@ -189,8 +254,13 @@ def custom_contains(input_list, value):
         True
 
     """
+    for item in input_list:
+        if item == value:
+            return True
+        else:
+            return False
 
-    return None
+    # return None
 
 
 def custom_equality(some_list, another_list):
@@ -208,8 +278,14 @@ def custom_equality(some_list, another_list):
         False
 
     """
+    for x in some_list:
+        for y in another_list:
+            if x != y:
+                return False
+            else:
+                return True
 
-    return None
+    # return None
 
 
 # This is the part were we actually run the doctests.
